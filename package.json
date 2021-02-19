@@ -1,0 +1,29 @@
+{
+  "name": "time-interval",
+  "version": "1.0.0",
+  "description": "A time duration convert library based on tagged template syntax",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SineTitans/time-interval.git"
+  },
+  "author": {
+    "name": "Sine Titan",
+    "email": "565022817@qq.com",
+    "url": "https://github.com/SineTitans"
+  },
+  "license": "MIT",
+  "scripts": {
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "tslib": "^2.1.0"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.1",
+    "typescript": "^4.1.5"
+  }
+}
