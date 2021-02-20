@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.interval = void 0;
-function interval(input, ...args) {
+exports.invl = exports.interval = void 0;
+const tslib_1 = require("tslib");
+const duration_1 = require("./duration");
+const period_1 = require("./period");
+const util_1 = require("./util");
+function interval(input = "PT0S", ...args) {
+    let iso8601 = typeof input === "string" ? util_1.strToTSA(input) : input;
+    return { duration: duration_1.duration(iso8601, ...args), period: period_1.period(iso8601, ...args) };
 }
 exports.interval = interval;
-// function dur(...args: any[]) {
-//     return { wk: 0, d: 0, h: 0, min: 0, s: 0, ms: 0 };
-// }
-// let waiting = dur`PT1M${1}S`;
-// setTimeout(function () {
-// }, dur`PT1M${1}S`.ms/* 61000 */);
-// let comp = new cc.Component;
-// comp.scheduleOnce(function () {
-// }, waiting.s/* 61 */);
+exports.invl = interval;
+tslib_1.__exportStar(require("./duration"), exports);
+tslib_1.__exportStar(require("./period"), exports);
 //# sourceMappingURL=index.js.map

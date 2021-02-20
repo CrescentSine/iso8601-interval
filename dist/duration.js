@@ -1,130 +1,92 @@
-export interface Duration {
-    readonly weeks: number;
-    readonly wk: number;
-    readonly days: number;
-    readonly d: number;
-    readonly hours: number;
-    readonly h: number;
-    readonly minutes: number;
-    readonly min: number;
-    readonly seconds: number;
-    readonly s: number;
-    readonly milliseconds: number;
-    readonly ms: number;
-    add(dur: Duration): Duration;
-    toDate(start: Date): Date;
-}
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dur = exports.duration = void 0;
 const MS_PER_SECOND = 1000;
-
 const SECONDS_PER_MINUTE = 60;
 const MS_PER_MINUTE = SECONDS_PER_MINUTE * MS_PER_SECOND;
-
 const MINUTES_PER_HOUR = 60;
 const MS_PER_HOUR = MINUTES_PER_HOUR * MS_PER_MINUTE;
-
 const HOURS_PER_DAY = 24;
 const MS_PER_DAY = HOURS_PER_DAY * MS_PER_HOUR;
-
 const DAYS_PER_WEEK = 7;
 const MS_PER_WEEK = DAYS_PER_WEEK * MS_PER_DAY;
-
-class DurationImpl implements Duration {
-    private _ms_num: number;
-    constructor(ms: number) {
+class DurationImpl {
+    constructor(ms) {
         this._ms_num = ms;
     }
-
     get weeks() {
         return this._ms_num / MS_PER_WEEK;
     }
-
     get wk() {
         return this.weeks;
     }
-
     get days() {
         return this._ms_num / MS_PER_DAY;
     }
-
     get d() {
         return this.days;
     }
-
     get hours() {
         return this._ms_num / MS_PER_HOUR;
     }
-
     get h() {
         return this.hours;
     }
-
     get minutes() {
         return this._ms_num / MS_PER_MINUTE;
     }
-
     get min() {
         return this.minutes;
     }
-
     get seconds() {
         return this._ms_num / MS_PER_SECOND;
     }
-
     get s() {
         return this.seconds;
     }
-
     get milliseconds() {
         return this._ms_num;
     }
-
     get ms() {
         return this.milliseconds;
     }
-
-    add(dur: Duration) {
+    add(dur) {
         return new DurationImpl(this._ms_num + dur.ms);
     }
-
-    toDate(start: Date) {
+    toDate(start) {
         return new Date(this._ms_num + start.getTime());
     }
 }
-
-export function duration(ms: number): Duration;
-/** @param iso8601 PTnHnMnS */
-export function duration(iso8601: string): Duration;
-/** @param iso8601 PTnHnMnS */
-export function duration(iso8601: TemplateStringsArray, ...args: number[]): Duration;
-export function duration(input: number | string | TemplateStringsArray, ...args: number[]): Duration {
+function duration(input, ...args) {
     return new DurationImpl(0);
 }
-
-export namespace duration {
-    export function ofWeeks(weeks: number): Duration {
+exports.duration = duration;
+exports.dur = duration;
+(function (duration) {
+    function ofWeeks(weeks) {
         return new DurationImpl(weeks * MS_PER_WEEK);
     }
-
-    export function ofDays(days: number): Duration {
+    duration.ofWeeks = ofWeeks;
+    function ofDays(days) {
         return new DurationImpl(days * MS_PER_DAY);
     }
-
-    export function ofHours(hours: number): Duration {
+    duration.ofDays = ofDays;
+    function ofHours(hours) {
         return new DurationImpl(hours * MS_PER_HOUR);
     }
-
-    export function ofMinutes(minutes: number): Duration {
+    duration.ofHours = ofHours;
+    function ofMinutes(minutes) {
         return new DurationImpl(minutes * MS_PER_MINUTE);
     }
-
-    export function ofSeconds(seconds: number): Duration {
+    duration.ofMinutes = ofMinutes;
+    function ofSeconds(seconds) {
         return new DurationImpl(seconds * MS_PER_SECOND);
     }
-
-    export function ofMilliseconds(milliseconds: number): Duration {
+    duration.ofSeconds = ofSeconds;
+    function ofMilliseconds(milliseconds) {
         return new DurationImpl(milliseconds);
     }
-}
-
-export { duration as dur };
+    duration.ofMilliseconds = ofMilliseconds;
+})(duration = exports.duration || (exports.duration = {}));
+exports.dur = duration;
+//# sourceMappingURL=duration.js.map
