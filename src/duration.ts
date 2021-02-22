@@ -101,8 +101,6 @@ class DurationProcessor extends BaseProcessor {
         return this._totalMS;
     }
 
-    private _inputtedUnits = new Set();
-
     protected init(input: TOKEN): STATUS {
         if (input === 'P') {
             return this.waitingT;
@@ -117,22 +115,19 @@ class DurationProcessor extends BaseProcessor {
         return this.startInputNum;
     }
 
-    protected inputtingUnit(input: TOKEN): STATUS {
-        if (this._inputtedUnits.has(input)) {
-            throw new SyntaxError(`Cannot repeat input the unit "${input}"`);
-        }
-        const inputtedValue = this.getInputtedValue();
-        switch (input) {
-            case 'H': this._totalMS += inputtedValue * MS_PER_HOUR; break;
-            case 'M': this._totalMS += inputtedValue * MS_PER_MINUTE; break;
-            case 'S': this._totalMS += inputtedValue * MS_PER_SECOND; break;
-            default: throw new SyntaxError(`Incorrect time unit "${input}" inputted`);
-        }
-        this._inputtedUnits.add(input);
-        if (input !== 'S' && this.nonIntegerOnTemplate) {
+    protected checkBeforeProcessInput(input: TOKEN, isIntegerOrArg: boolean) {
+        if (input !== 'S' && !isIntegerOrArg) {
             throw new SyntaxError('Only seconds can be non-integer');
         }
-        return this.startInputNum;
+    };
+
+    protected processInput(input: TOKEN, value: number) {
+        switch (input) {
+            case 'H': this._totalMS += value * MS_PER_HOUR; break;
+            case 'M': this._totalMS += value * MS_PER_MINUTE; break;
+            case 'S': this._totalMS += value * MS_PER_SECOND; break;
+            default: throw new SyntaxError(`Incorrect time unit "${input}" inputted`);
+        }
     }
 }
 

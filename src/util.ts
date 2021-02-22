@@ -38,6 +38,7 @@ export abstract class BaseProcessor implements InputProcessor {
     private _inputtingDecimalUnit = 1;
     private _signOfInputtingNum = 1;
     private _nonIntegerInputted = false;
+    private _inputtedUnits = new Set();
 
     input(token: TOKEN) {
         this.current = this.current(token);
@@ -106,5 +107,21 @@ export abstract class BaseProcessor implements InputProcessor {
         return this.inputtingUnit(input);
     }
 
-    protected abstract inputtingUnit(input: TOKEN): STATUS;
+    protected checkBeforeProcessInput?(input: TOKEN, isIntegerOrArg: boolean): void;
+    protected processInput?(input: TOKEN, value: number): void;
+
+    protected inputtingUnit(input: TOKEN): STATUS {
+        if (this._inputtedUnits.has(input)) {
+            throw new SyntaxError(`Cannot repeat input the unit "${input}"`);
+        }
+        if (this.checkBeforeProcessInput) {
+            this.checkBeforeProcessInput(input, !this._nonIntegerInputted);
+        }
+        const inputtedValue = this.getInputtedValue();
+        if (this.processInput) {
+            this.processInput(input, inputtedValue);
+        }
+        this._inputtedUnits.add(input);
+        return this.startInputNum;
+    };
 }

@@ -62,7 +62,6 @@ class DurationProcessor extends util_1.BaseProcessor {
     constructor() {
         super(...arguments);
         this._totalMS = 0;
-        this._inputtedUnits = new Set();
     }
     getResultMS() {
         return this._totalMS;
@@ -79,28 +78,25 @@ class DurationProcessor extends util_1.BaseProcessor {
         }
         return this.startInputNum;
     }
-    inputtingUnit(input) {
-        if (this._inputtedUnits.has(input)) {
-            throw new SyntaxError(`Cannot repeat input the unit "${input}"`);
+    checkBeforeProcessInput(input, isIntegerOrArg) {
+        if (input !== 'S' && !isIntegerOrArg) {
+            throw new SyntaxError('Only seconds can be non-integer');
         }
-        const inputtedValue = this.getInputtedValue();
+    }
+    ;
+    processInput(input, value) {
         switch (input) {
             case 'H':
-                this._totalMS += inputtedValue * MS_PER_HOUR;
+                this._totalMS += value * MS_PER_HOUR;
                 break;
             case 'M':
-                this._totalMS += inputtedValue * MS_PER_MINUTE;
+                this._totalMS += value * MS_PER_MINUTE;
                 break;
             case 'S':
-                this._totalMS += inputtedValue * MS_PER_SECOND;
+                this._totalMS += value * MS_PER_SECOND;
                 break;
             default: throw new SyntaxError(`Incorrect time unit "${input}" inputted`);
         }
-        this._inputtedUnits.add(input);
-        if (input !== 'S' && this.nonIntegerOnTemplate) {
-            throw new SyntaxError('Only seconds can be non-integer');
-        }
-        return this.startInputNum;
     }
 }
 function duration(input, ...args) {

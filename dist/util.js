@@ -32,6 +32,7 @@ class BaseProcessor {
         this._inputtingDecimalUnit = 1;
         this._signOfInputtingNum = 1;
         this._nonIntegerInputted = false;
+        this._inputtedUnits = new Set();
     }
     input(token) {
         this.current = this.current(token);
@@ -91,6 +92,21 @@ class BaseProcessor {
         }
         return this.inputtingUnit(input);
     }
+    inputtingUnit(input) {
+        if (this._inputtedUnits.has(input)) {
+            throw new SyntaxError(`Cannot repeat input the unit "${input}"`);
+        }
+        if (this.checkBeforeProcessInput) {
+            this.checkBeforeProcessInput(input, !this._nonIntegerInputted);
+        }
+        const inputtedValue = this.getInputtedValue();
+        if (this.processInput) {
+            this.processInput(input, inputtedValue);
+        }
+        this._inputtedUnits.add(input);
+        return this.startInputNum;
+    }
+    ;
 }
 exports.BaseProcessor = BaseProcessor;
 //# sourceMappingURL=util.js.map

@@ -11,6 +11,7 @@ export declare abstract class BaseProcessor implements InputProcessor {
     private _inputtingDecimalUnit;
     private _signOfInputtingNum;
     private _nonIntegerInputted;
+    private _inputtedUnits;
     input(token: TOKEN): void;
     protected getInputtedValue(): number;
     protected get nonIntegerOnTemplate(): boolean;
@@ -18,6 +19,8 @@ export declare abstract class BaseProcessor implements InputProcessor {
     protected startInputNum(input: TOKEN): STATUS;
     protected inputtingNum(input: TOKEN): STATUS;
     protected inputtingDecimalPart(input: TOKEN): STATUS;
-    protected abstract inputtingUnit(input: TOKEN): STATUS;
+    protected checkBeforeProcessInput?(input: TOKEN, isIntegerOrArg: boolean): void;
+    protected processInput?(input: TOKEN, value: number): void;
+    protected inputtingUnit(input: TOKEN): STATUS;
 }
 //# sourceMappingURL=util.d.ts.map
