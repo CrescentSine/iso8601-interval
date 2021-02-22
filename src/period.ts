@@ -22,8 +22,8 @@ class PeriodImpl implements Period {
         if (!startWith) startWith = new Date;
         let changeDate = new Date(startWith.getTime());
 
-        changeDate.setDate(changeDate.getDate() + this._days);
-        changeDate.setMonth(changeDate.getMonth() + this._months);
+        if (this._days) changeDate.setDate(changeDate.getDate() + this._days);
+        if (this._months) changeDate.setMonth(changeDate.getMonth() + this._months);
         return duration(changeDate.getTime() - startWith.getTime());
     }
     toDate(start: Date): Date {
