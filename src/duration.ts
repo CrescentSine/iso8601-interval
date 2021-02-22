@@ -96,7 +96,6 @@ class DurationImpl implements Duration {
 
 type TOKEN = string | number;
 type STATUS = (this: DurationProcessor, input: TOKEN) => STATUS;
-const DIGITS = "0123456789";
 const IS_DIGIT = /[0-9]/;
 const ZERO_CODE = '0'.charCodeAt(0);
 
