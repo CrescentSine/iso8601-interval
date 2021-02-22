@@ -5,7 +5,7 @@ export interface Interval {
     period: Period;
 }
 /** @param iso8601 PnYnMnWnDTnHnMnS */
-export declare function interval(iso8601: string): Interval;
+export declare function interval(iso8601?: string): Interval;
 /** @param iso8601 PnYnMnWnDTnHnMnS */
 export declare function interval(iso8601: TemplateStringsArray, ...args: number[]): Interval;
 export { interval as invl };

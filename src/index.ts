@@ -8,7 +8,7 @@ export interface Interval {
 }
 
 /** @param iso8601 PnYnMnWnDTnHnMnS */
-export function interval(iso8601: string): Interval;
+export function interval(iso8601?: string): Interval;
 /** @param iso8601 PnYnMnWnDTnHnMnS */
 export function interval(iso8601: TemplateStringsArray, ...args: number[]): Interval;
 export function interval(input: string | TemplateStringsArray = "PT0S", ...args: number[]): Interval {
