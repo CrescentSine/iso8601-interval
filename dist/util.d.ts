@@ -22,4 +22,5 @@ export declare abstract class BaseProcessor implements InputProcessor {
     protected processInput?(input: TOKEN, value: number): void;
     protected inputtingUnit(input: TOKEN): STATUS;
 }
+export declare type TypeHint = "default" | "string" | "number";
 //# sourceMappingURL=util.d.ts.map

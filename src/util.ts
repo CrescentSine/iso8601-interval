@@ -120,3 +120,5 @@ export abstract class BaseProcessor implements InputProcessor {
         return this.startInputNum;
     };
 }
+
+export type TypeHint = "default" | "string" | "number"; 

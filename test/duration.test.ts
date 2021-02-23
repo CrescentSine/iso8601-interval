@@ -87,3 +87,17 @@ test('cannot combine templates and parameters as input number', function () {
     expect(() => dur`PT1${1}S`).toThrow();
     expect(() => dur`PT1.${5}S`).toThrow();
 });
+
+test('convert duration to number', function () {
+    expect(+dur`PT1S`).toBe(1000);
+});
+
+test('convert duration to string', function () {
+    expect(dur(0).toString()).toBe('PT0S');
+    expect(`${dur`PT60S`}`).toBe('PT1M');
+    expect(`${dur`PT-3661.5S`}`).toBe('PT-1H-1M-1.5S');
+});
+
+test('default convert duration to string', function () {
+    expect(dur`PT60S` as unknown as any + 3).toBe('PT1M3');
+});

@@ -1,4 +1,4 @@
-import { BaseProcessor, STATUS, strToTSA, TemplateInputProcess, TOKEN } from "./util";
+import { BaseProcessor, STATUS, strToTSA, TemplateInputProcess, TOKEN, TypeHint } from "./util";
 
 export interface Duration {
     readonly weeks: number;
@@ -96,6 +96,32 @@ class DurationImpl implements Duration {
 
     toDate(start: Date) {
         return new Date(this._ms_num + start.getTime());
+    }
+
+    [Symbol.toPrimitive](hint: TypeHint) {
+        if (hint === "number") {
+            return this._ms_num;
+        }
+        if (!this._ms_num) {
+            return "PT0S";
+        }
+        let left = this._ms_num;
+        let seconds = left % MS_PER_MINUTE;
+        left -= seconds;
+        seconds /= MS_PER_SECOND;
+        left /= MS_PER_MINUTE;
+        let minutes = left % MINUTES_PER_HOUR;
+        left -= minutes;
+        let hours = left / MINUTES_PER_HOUR;
+        let result = "PT";
+        if (hours) result += `${hours}H`;
+        if (minutes) result += `${minutes}M`;
+        if (seconds) result += `${seconds}S`;
+        return result;
+    }
+
+    toString() {
+        return this[Symbol.toPrimitive]("string");
     }
 }
 
