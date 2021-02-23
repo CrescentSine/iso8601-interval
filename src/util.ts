@@ -48,11 +48,6 @@ export abstract class BaseProcessor implements InputProcessor {
         return this._inputtingNum * this._signOfInputtingNum;
     }
 
-    // 因为浮点计算可能由精度误差，不要求模板参数为整数
-    protected get nonIntegerOnTemplate() {
-        return this._nonIntegerInputted;
-    }
-
     protected abstract init(input: TOKEN): STATUS;
 
     protected startInputNum(input: TOKEN): STATUS {
@@ -107,6 +102,7 @@ export abstract class BaseProcessor implements InputProcessor {
         return this.inputtingUnit(input);
     }
 
+    // 因为浮点计算可能由精度误差，不要求模板参数为整数
     protected checkBeforeProcessInput?(input: TOKEN, isIntegerOrArg: boolean): void;
     protected processInput?(input: TOKEN, value: number): void;
 
@@ -117,9 +113,8 @@ export abstract class BaseProcessor implements InputProcessor {
         if (this.checkBeforeProcessInput) {
             this.checkBeforeProcessInput(input, !this._nonIntegerInputted);
         }
-        const inputtedValue = this.getInputtedValue();
         if (this.processInput) {
-            this.processInput(input, inputtedValue);
+            this.processInput(input, this.getInputtedValue());
         }
         this._inputtedUnits.add(input);
         return this.startInputNum;

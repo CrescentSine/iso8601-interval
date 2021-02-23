@@ -14,7 +14,6 @@ export declare abstract class BaseProcessor implements InputProcessor {
     private _inputtedUnits;
     input(token: TOKEN): void;
     protected getInputtedValue(): number;
-    protected get nonIntegerOnTemplate(): boolean;
     protected abstract init(input: TOKEN): STATUS;
     protected startInputNum(input: TOKEN): STATUS;
     protected inputtingNum(input: TOKEN): STATUS;

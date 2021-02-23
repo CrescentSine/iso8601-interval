@@ -54,6 +54,9 @@ class DurationImpl {
     add(dur) {
         return new DurationImpl(this._ms_num + dur.ms);
     }
+    sub(dur) {
+        return new DurationImpl(this._ms_num - dur.ms);
+    }
     toDate(start) {
         return new Date(this._ms_num + start.getTime());
     }

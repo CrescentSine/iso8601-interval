@@ -40,10 +40,6 @@ class BaseProcessor {
     getInputtedValue() {
         return this._inputtingNum * this._signOfInputtingNum;
     }
-    // 因为浮点计算可能由精度误差，不要求模板参数为整数
-    get nonIntegerOnTemplate() {
-        return this._nonIntegerInputted;
-    }
     startInputNum(input) {
         this._inputtingNum = 0;
         this._nonIntegerInputted = false;
@@ -99,9 +95,8 @@ class BaseProcessor {
         if (this.checkBeforeProcessInput) {
             this.checkBeforeProcessInput(input, !this._nonIntegerInputted);
         }
-        const inputtedValue = this.getInputtedValue();
         if (this.processInput) {
-            this.processInput(input, inputtedValue);
+            this.processInput(input, this.getInputtedValue());
         }
         this._inputtedUnits.add(input);
         return this.startInputNum;

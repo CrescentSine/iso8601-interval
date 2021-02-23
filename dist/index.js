@@ -7,7 +7,15 @@ const period_1 = require("./period");
 const util_1 = require("./util");
 function interval(input = "PT0S", ...args) {
     let iso8601 = typeof input === "string" ? util_1.strToTSA(input) : input;
-    return { duration: duration_1.duration(iso8601, ...args), period: period_1.period(iso8601, ...args) };
+    let dur = duration_1.duration(iso8601, ...args);
+    let per = period_1.period(iso8601, ...args);
+    let movingDays = per.getCertainDays();
+    if (movingDays) {
+        let moving = period_1.period(0, movingDays);
+        per = per.sub(moving);
+        dur = dur.add(moving.toDuration());
+    }
+    return { duration: dur, period: per };
 }
 exports.interval = interval;
 exports.invl = interval;

@@ -8,10 +8,22 @@ class PeriodImpl {
         this._days = days;
         this._months = months;
     }
+    getCertainDays() {
+        return this._days;
+    }
+    getFullMonths() {
+        return this._months;
+    }
     add(period) {
-        throw new Error('Method not implemented.');
+        return new PeriodImpl(this._days + period.getCertainDays(), this._months + period.getFullMonths());
+    }
+    sub(period) {
+        return new PeriodImpl(this._days - period.getCertainDays(), this._months - period.getFullMonths());
     }
     toDuration(startWith) {
+        if (!this._days && !this._months) {
+            return duration_1.duration(0);
+        }
         if (!startWith)
             startWith = new Date;
         let changeDate = new Date(startWith.getTime());
@@ -75,6 +87,9 @@ class PeriodProcessor extends util_1.BaseProcessor {
     }
 }
 function period(input, ...args) {
+    if (typeof input === 'number') {
+        return new PeriodImpl(args[0], input);
+    }
     let iso8601 = typeof input === "string" ? util_1.strToTSA(input) : input;
     let processor = new PeriodProcessor;
     util_1.TemplateInputProcess(processor, iso8601, args);

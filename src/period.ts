@@ -3,8 +3,11 @@ import { BaseProcessor, STATUS, strToTSA, TemplateInputProcess, TOKEN } from './
 
 export interface Period {
     add(period: Period): Period;
+    sub(period: Period): Period;
     toDuration(startWith?: Date): Duration;
     toDate(start: Date): Date;
+    getCertainDays(): number;
+    getFullMonths(): number;
 }
 
 class PeriodImpl implements Period {
@@ -15,10 +18,31 @@ class PeriodImpl implements Period {
         this._months = months;
     }
 
-    add(period: Period): Period {
-        throw new Error('Method not implemented.');
+    getCertainDays() {
+        return this._days;
     }
+
+    getFullMonths() {
+        return this._months;
+    }
+
+    add(period: Period): Period {
+        return new PeriodImpl(
+            this._days + period.getCertainDays(),
+            this._months + period.getFullMonths());
+    }
+
+    sub(period: Period): Period {
+        return new PeriodImpl(
+            this._days - period.getCertainDays(),
+            this._months - period.getFullMonths());
+    }
+
     toDuration(startWith?: Date): Duration {
+        if (!this._days && !this._months) {
+            return duration(0);
+        }
+
         if (!startWith) startWith = new Date;
         let changeDate = new Date(startWith.getTime());
 
@@ -75,11 +99,15 @@ class PeriodProcessor extends BaseProcessor {
     }
 }
 
+export function period(months: number, days: number): Period;
 /** @param iso8601 PnYnMnWnD */
 export function period(iso8601: string): Period;
 /** @param iso8601 PnYnMnWnD */
 export function period(iso8601: TemplateStringsArray, ...args: number[]): Period;
-export function period(input: string | TemplateStringsArray, ...args: number[]): Period {
+export function period(input: number | string | TemplateStringsArray, ...args: number[]): Period {
+    if (typeof input === 'number') {
+        return new PeriodImpl(args[0], input);
+    }
     let iso8601 = typeof input === "string" ? strToTSA(input) : input;
     let processor = new PeriodProcessor;
 

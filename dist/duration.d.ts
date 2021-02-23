@@ -12,6 +12,7 @@ export interface Duration {
     readonly milliseconds: number;
     readonly ms: number;
     add(dur: Duration): Duration;
+    sub(dur: Duration): Duration;
     toDate(start: Date): Date;
 }
 export declare function duration(ms: number): Duration;

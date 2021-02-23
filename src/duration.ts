@@ -14,6 +14,7 @@ export interface Duration {
     readonly milliseconds: number;
     readonly ms: number;
     add(dur: Duration): Duration;
+    sub(dur: Duration): Duration;
     toDate(start: Date): Date;
 }
 
@@ -87,6 +88,10 @@ class DurationImpl implements Duration {
 
     add(dur: Duration) {
         return new DurationImpl(this._ms_num + dur.ms);
+    }
+
+    sub(dur: Duration) {
+        return new DurationImpl(this._ms_num - dur.ms);
     }
 
     toDate(start: Date) {
