@@ -106,14 +106,14 @@ class DurationProcessor extends BaseProcessor {
         return this._totalMS;
     }
 
-    protected init(input: TOKEN): STATUS {
+    protected init(input: TOKEN) {
         if (input === 'P') {
             return this.waitingT;
         }
         throw new SyntaxError('The input must start with P');
     }
 
-    private waitingT(input: TOKEN): STATUS {
+    private waitingT(input: TOKEN) {
         if (input !== 'T') {
             return this.waitingT;
         }

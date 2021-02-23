@@ -26,19 +26,19 @@ class PeriodImpl implements Period {
         return this._months;
     }
 
-    add(period: Period): Period {
+    add(period: Period) {
         return new PeriodImpl(
             this._days + period.getCertainDays(),
             this._months + period.getFullMonths());
     }
 
-    sub(period: Period): Period {
+    sub(period: Period) {
         return new PeriodImpl(
             this._days - period.getCertainDays(),
             this._months - period.getFullMonths());
     }
 
-    toDuration(startWith?: Date): Duration {
+    toDuration(startWith?: Date) {
         if (!this._days && !this._months) {
             return duration(0);
         }
@@ -50,8 +50,12 @@ class PeriodImpl implements Period {
         if (this._months) changeDate.setMonth(changeDate.getMonth() + this._months);
         return duration(changeDate.getTime() - startWith.getTime());
     }
-    toDate(start: Date): Date {
-        throw new Error('Method not implemented.');
+
+    toDate(start: Date) {
+        let result = new Date(start.getTime());
+        result.setDate(result.getDate() + this._days);
+        result.setMonth(result.getMonth() + this._months);
+        return result;
     }
 }
 
@@ -66,19 +70,19 @@ class PeriodProcessor extends BaseProcessor {
         return new PeriodImpl(this._totalDays, this._totalMonths);
     }
 
-    protected init(input: TOKEN): STATUS {
+    protected init(input: TOKEN) {
         if (input === 'P') {
             return this.startInputNum;
         }
         throw new SyntaxError('The input must start with P');
     }
 
-    protected startInputNum(input: TOKEN): STATUS {
+    protected startInputNum(input: TOKEN) {
         if (input === 'T') return this.ignoreAfterT;
         return super.startInputNum(input);
     }
 
-    protected ignoreAfterT(): STATUS {
+    protected ignoreAfterT() {
         return this.ignoreAfterT;
     }
 

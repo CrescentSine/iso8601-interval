@@ -34,7 +34,10 @@ class PeriodImpl {
         return duration_1.duration(changeDate.getTime() - startWith.getTime());
     }
     toDate(start) {
-        throw new Error('Method not implemented.');
+        let result = new Date(start.getTime());
+        result.setDate(result.getDate() + this._days);
+        result.setMonth(result.getMonth() + this._months);
+        return result;
     }
 }
 const MONTHS_PER_YEAR = 12;
