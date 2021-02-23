@@ -35,3 +35,11 @@ test('cannot input non-integer on period template', function () {
 test('cannot input unknown period time unit', function () {
     expect(() => per`P1T`).toThrow();
 });
+
+test('primitive of period is always string', function () {
+    expect(+per`P0D`).toBeNaN();
+    expect(per(0, 0).toString()).toBe('P0D');
+    expect(`${per`P1M8D`}`).toBe('P1M1W1D');
+    expect(`${per`P-1Y2M10D`}`).toBe('P-10M1W3D');
+    expect(per`P12M` as unknown as any + 3).toBe('P1Y3');
+});

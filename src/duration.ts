@@ -1,4 +1,4 @@
-import { BaseProcessor, STATUS, strToTSA, TemplateInputProcess, TOKEN, TypeHint } from "./util";
+import { BaseProcessor, strToTSA, TemplateInputProcess, TOKEN } from "./util";
 
 export interface Duration {
     readonly weeks: number;
@@ -31,6 +31,8 @@ const MS_PER_DAY = HOURS_PER_DAY * MS_PER_HOUR;
 
 const DAYS_PER_WEEK = 7;
 const MS_PER_WEEK = DAYS_PER_WEEK * MS_PER_DAY;
+
+type TypeHint = "default" | "string" | "number";
 
 class DurationImpl implements Duration {
     private _ms_num: number;

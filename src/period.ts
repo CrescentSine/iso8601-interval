@@ -1,5 +1,5 @@
 import { Duration, duration } from './duration';
-import { BaseProcessor, STATUS, strToTSA, TemplateInputProcess, TOKEN } from './util';
+import { BaseProcessor, strToTSA, TemplateInputProcess, TOKEN } from './util';
 
 export interface Period {
     add(period: Period): Period;
@@ -56,6 +56,26 @@ class PeriodImpl implements Period {
         result.setDate(result.getDate() + this._days);
         result.setMonth(result.getMonth() + this._months);
         return result;
+    }
+
+    [Symbol.toPrimitive]() {
+        if (!this._days && !this._months) {
+            return "P0D";
+        }
+        let months = this._months % MONTHS_PER_YEAR;
+        let years = (this._months - months) / MONTHS_PER_YEAR;
+        let days = this._days % DAYS_PER_WEEK;
+        let weeks = (this._days - days) / DAYS_PER_WEEK;
+        let result = "P";
+        if (years) result += `${years}Y`;
+        if (months) result += `${months}M`;
+        if (weeks) result += `${weeks}W`;
+        if (days) result += `${days}D`;
+        return result;
+    }
+
+    toString() {
+        return this[Symbol.toPrimitive]();
     }
 }
 

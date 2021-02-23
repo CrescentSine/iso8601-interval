@@ -119,6 +119,4 @@ export abstract class BaseProcessor implements InputProcessor {
         this._inputtedUnits.add(input);
         return this.startInputNum;
     };
-}
-
-export type TypeHint = "default" | "string" | "number"; 
+} 
