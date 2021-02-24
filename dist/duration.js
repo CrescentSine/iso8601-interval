@@ -60,13 +60,7 @@ class DurationImpl {
     toDate(start) {
         return new Date(this._ms_num + start.getTime());
     }
-    [Symbol.toPrimitive](hint) {
-        if (hint === "number") {
-            return this._ms_num;
-        }
-        if (!this._ms_num) {
-            return "PT0S";
-        }
+    toDataJson() {
         let left = this._ms_num;
         let seconds = left % MS_PER_MINUTE;
         left -= seconds;
@@ -75,6 +69,16 @@ class DurationImpl {
         let minutes = left % MINUTES_PER_HOUR;
         left -= minutes;
         let hours = left / MINUTES_PER_HOUR;
+        return { hours, minutes, seconds };
+    }
+    [Symbol.toPrimitive](hint) {
+        if (hint === "number") {
+            return this._ms_num;
+        }
+        if (!this._ms_num) {
+            return "PT0S";
+        }
+        let { hours, minutes, seconds, } = this.toDataJson();
         let result = "PT";
         if (hours)
             result += `${hours}H`;

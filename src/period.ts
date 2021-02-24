@@ -8,6 +8,12 @@ export interface Period {
     toDate(start: Date): Date;
     getCertainDays(): number;
     getFullMonths(): number;
+    toDataJson(): {
+        years: number;
+        months: number;
+        weeks: number;
+        days: number;
+    };
 }
 
 class PeriodImpl implements Period {
@@ -58,14 +64,23 @@ class PeriodImpl implements Period {
         return result;
     }
 
-    [Symbol.toPrimitive]() {
-        if (!this._days && !this._months) {
-            return "P0D";
-        }
+    toDataJson() {
         let months = this._months % MONTHS_PER_YEAR;
         let years = (this._months - months) / MONTHS_PER_YEAR;
         let days = this._days % DAYS_PER_WEEK;
         let weeks = (this._days - days) / DAYS_PER_WEEK;
+        return { years, months, weeks, days };
+    }
+
+    [Symbol.toPrimitive]() {
+        if (!this._days && !this._months) {
+            return "P0D";
+        }
+
+        let {
+            years, months, weeks, days,
+        } = this.toDataJson();
+
         let result = "P";
         if (years) result += `${years}Y`;
         if (months) result += `${months}M`;
@@ -138,6 +153,23 @@ export function period(input: number | string | TemplateStringsArray, ...args: n
     TemplateInputProcess(processor, iso8601, args);
 
     return processor.createResultPeriod();
+}
+export namespace period {
+    export function ofYears(years: number) {
+        return new PeriodImpl(0, years * MONTHS_PER_YEAR);
+    }
+
+    export function ofMonths(months: number) {
+        return new PeriodImpl(0, months);
+    }
+
+    export function ofWeeks(weeks: number) {
+        return new PeriodImpl(weeks * DAYS_PER_WEEK, 0);
+    }
+
+    export function ofDays(days: number) {
+        return new PeriodImpl(days, 0);
+    }
 }
 
 export { period as per };

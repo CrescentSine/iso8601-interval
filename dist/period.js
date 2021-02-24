@@ -39,14 +39,18 @@ class PeriodImpl {
         result.setMonth(result.getMonth() + this._months);
         return result;
     }
-    [Symbol.toPrimitive]() {
-        if (!this._days && !this._months) {
-            return "P0D";
-        }
+    toDataJson() {
         let months = this._months % MONTHS_PER_YEAR;
         let years = (this._months - months) / MONTHS_PER_YEAR;
         let days = this._days % DAYS_PER_WEEK;
         let weeks = (this._days - days) / DAYS_PER_WEEK;
+        return { years, months, weeks, days };
+    }
+    [Symbol.toPrimitive]() {
+        if (!this._days && !this._months) {
+            return "P0D";
+        }
+        let { years, months, weeks, days, } = this.toDataJson();
         let result = "P";
         if (years)
             result += `${years}Y`;
@@ -121,5 +125,24 @@ function period(input, ...args) {
     return processor.createResultPeriod();
 }
 exports.period = period;
+exports.per = period;
+(function (period) {
+    function ofYears(years) {
+        return new PeriodImpl(0, years * MONTHS_PER_YEAR);
+    }
+    period.ofYears = ofYears;
+    function ofMonths(months) {
+        return new PeriodImpl(0, months);
+    }
+    period.ofMonths = ofMonths;
+    function ofWeeks(weeks) {
+        return new PeriodImpl(weeks * DAYS_PER_WEEK, 0);
+    }
+    period.ofWeeks = ofWeeks;
+    function ofDays(days) {
+        return new PeriodImpl(days, 0);
+    }
+    period.ofDays = ofDays;
+})(period = exports.period || (exports.period = {}));
 exports.per = period;
 //# sourceMappingURL=period.js.map

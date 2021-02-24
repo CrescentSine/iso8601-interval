@@ -6,11 +6,42 @@ export interface Period {
     toDate(start: Date): Date;
     getCertainDays(): number;
     getFullMonths(): number;
+    toDataJson(): {
+        years: number;
+        months: number;
+        weeks: number;
+        days: number;
+    };
+}
+declare class PeriodImpl implements Period {
+    private _days;
+    private _months;
+    constructor(days: number, months: number);
+    getCertainDays(): number;
+    getFullMonths(): number;
+    add(period: Period): PeriodImpl;
+    sub(period: Period): PeriodImpl;
+    toDuration(startWith?: Date): Duration;
+    toDate(start: Date): Date;
+    toDataJson(): {
+        years: number;
+        months: number;
+        weeks: number;
+        days: number;
+    };
+    [Symbol.toPrimitive](): string;
+    toString(): string;
 }
 export declare function period(months: number, days: number): Period;
 /** @param iso8601 PnYnMnWnD */
 export declare function period(iso8601: string): Period;
 /** @param iso8601 PnYnMnWnD */
 export declare function period(iso8601: TemplateStringsArray, ...args: number[]): Period;
+export declare namespace period {
+    function ofYears(years: number): PeriodImpl;
+    function ofMonths(months: number): PeriodImpl;
+    function ofWeeks(weeks: number): PeriodImpl;
+    function ofDays(days: number): PeriodImpl;
+}
 export { period as per };
 //# sourceMappingURL=period.d.ts.map

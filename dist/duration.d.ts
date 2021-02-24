@@ -14,6 +14,11 @@ export interface Duration {
     add(dur: Duration): Duration;
     sub(dur: Duration): Duration;
     toDate(start: Date): Date;
+    toDataJson(): {
+        hours: number;
+        minutes: number;
+        seconds: number;
+    };
 }
 export declare function duration(ms: number): Duration;
 /** @param iso8601 PTnHnMnS */

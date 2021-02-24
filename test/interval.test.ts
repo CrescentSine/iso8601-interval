@@ -11,3 +11,7 @@ test('1week24h -> 8day', function () {
     let test2 = invl`P1WT${24}H`;
     expect(test2.duration.add(test2.period.toDuration()).d).toBe(8);
 });
+
+test('convert interval to ISO8601 string', function () {
+    expect(invl`P13M1WT${24 * 8}H61M3.2S` + "").toBe("P1Y1M2W1DT1H1M3.2S");
+});
