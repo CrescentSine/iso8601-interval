@@ -7,25 +7,9 @@ const SECONDS_PER_MINUTE = 60;
 const MS_PER_MINUTE = SECONDS_PER_MINUTE * MS_PER_SECOND;
 const MINUTES_PER_HOUR = 60;
 const MS_PER_HOUR = MINUTES_PER_HOUR * MS_PER_MINUTE;
-const HOURS_PER_DAY = 24;
-const MS_PER_DAY = HOURS_PER_DAY * MS_PER_HOUR;
-const DAYS_PER_WEEK = 7;
-const MS_PER_WEEK = DAYS_PER_WEEK * MS_PER_DAY;
 class DurationImpl {
     constructor(ms) {
         this._ms_num = ms;
-    }
-    get weeks() {
-        return this._ms_num / MS_PER_WEEK;
-    }
-    get wk() {
-        return this.weeks;
-    }
-    get days() {
-        return this._ms_num / MS_PER_DAY;
-    }
-    get d() {
-        return this.days;
     }
     get hours() {
         return this._ms_num / MS_PER_HOUR;
@@ -145,14 +129,6 @@ function duration(input, ...args) {
 exports.duration = duration;
 exports.dur = duration;
 (function (duration) {
-    function ofWeeks(weeks) {
-        return new DurationImpl(weeks * MS_PER_WEEK);
-    }
-    duration.ofWeeks = ofWeeks;
-    function ofDays(days) {
-        return new DurationImpl(days * MS_PER_DAY);
-    }
-    duration.ofDays = ofDays;
     function ofHours(hours) {
         return new DurationImpl(hours * MS_PER_HOUR);
     }

@@ -5,7 +5,6 @@ import { strToTSA } from './util';
 export interface Interval {
     duration: Duration;
     period: Period;
-    normalization(): Interval;
 }
 
 class IntervalImpl implements Interval {
@@ -15,32 +14,9 @@ class IntervalImpl implements Interval {
         this.duration = duration;
         this.period = period;
     }
-
-    normalization(): Interval {
-        let dur = this.duration.add(duration(0));
-        let per = this.period.add(period(0, 0));
-        let movingDays = per.getCertainDays();
-    
-        if (movingDays) {
-            let moving = period(0, movingDays);
-            per = per.sub(moving);
-            dur = dur.add(moving.toDuration());
-        }
-        
-        return new IntervalImpl(dur, per);
-    }
     
     [Symbol.toPrimitive]() {
-        let dur = this.duration;
-        let per = this.period;
-
-        let addDays = Math.trunc(dur.days);
-        if (addDays !== 0) {
-            per = per.add(period.ofDays(addDays));
-            dur = dur.sub(duration.ofDays(addDays));
-        }
-
-        return `${per}${String(dur).substring(1)}`;
+        return `${this.period}${String(this.duration).substring(1)}`;
     }
 }
 
@@ -50,10 +26,8 @@ export function interval(iso8601?: string): Interval;
 export function interval(iso8601: TemplateStringsArray, ...args: number[]): Interval;
 export function interval(input: string | TemplateStringsArray = "PT0S", ...args: number[]): Interval {
     let iso8601 = typeof input === "string" ? strToTSA(input) : input;
-    let dur = duration(iso8601, ...args);
-    let per = period(iso8601, ...args);
 
-    return new IntervalImpl(dur, per).normalization();
+    return new IntervalImpl(duration(iso8601, ...args), period(iso8601, ...args));
 }
 
 export { interval as invl };

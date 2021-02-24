@@ -9,31 +9,16 @@ test('1s -> 1000ms', function () {
     expect(dur`PT${1}S`.milliseconds).toBe(1000);
 });
 
-test('1d - 12h = 12h', function () {
-    let oneDay = dur`PT24H`;
-    expect(oneDay.d).toBe(1);
-    expect(oneDay.sub(dur`PT12H`).h).toBe(12);
+test('1h - 30min = 30min', function () {
+    expect(dur`PT1H`.sub(dur`PT30M`).min).toBe(30);
 });
 
-test('2020.1.1 + 1wk = 2020.1.8', function () {
-    let oneWeek = dur`PT${24 * 7}H`;
-    expect(oneWeek.wk).toBe(1);
-    let result = oneWeek.toDate(new Date(2020, 0, 1));
-    expect(result.getFullYear()).toBe(2020);
-    expect(result.getMonth()).toBe(0);
-    expect(result.getDate()).toBe(8);
+test('59s + 1s = 1min', function () {
+    expect(dur`PT59S`.add(dur`PT1S`).min).toBe(1);
 });
 
 test('1min60s -> 2min', function () {
     expect(dur`PT1M60S`.min).toBe(2);
-});
-
-test('1wk -> 7d', function () {
-    expect(dur.ofWeeks(1).days).toBe(7);
-});
-
-test('1d -> 24h', function () {
-    expect(dur.ofDays(1).hours).toBe(24);
 });
 
 test('1h -> 60min', function () {

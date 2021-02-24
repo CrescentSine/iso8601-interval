@@ -1,15 +1,24 @@
-import { per } from "../src"
+import { per } from "../src";
+import { register, unregister } from "timezone-mock";
 
-test('1day -> 24h', function () {
+test('1day -> 24h on UTC', function () {
+    register('UTC');
     expect(per`P${1}D`.toDuration().h).toBe(24);
+    unregister();
 });
 
 test('1week + 1day -> 8day', function () {
     expect(per`P1W`.add(per('P1D')).getCertainDays()).toBe(8);
 });
 
-test('1month from 2021.2.1 is 4weeks', function () {
-    expect(per`P1M`.toDuration(new Date(2021, 1, 1)).wk).toBe(4);
+test('1week - 1day -> 6day', function () {
+    expect(per`P1W`.sub(per`P1D`).getCertainDays()).toBe(6);
+});
+
+test('1month from 2021.2.1 is 28 * 24h on UTC', function () {
+    register('UTC');
+    expect(per`P1M`.toDuration(new Date(2001, 1, 1)).hours).toBe(28 * 24);
+    unregister();
 });
 
 test('1month after 2020.1.31', function () {
@@ -49,4 +58,10 @@ test('create period by static methods', function () {
     expect(per.ofMonths(1)).toEqual(per`P1M`);
     expect(per.ofWeeks(1)).toEqual(per`P1W`);
     expect(per.ofDays(1)).toEqual(per`P1D`);
+});
+
+test('4weeks start from 02-28 in EST is not 28 * 24 hours', function () {
+    register('US/Eastern');
+    expect(per`P4W`.toDuration(new Date(2020, 1, 28)).h).not.toBe(28 * 24);
+    unregister();
 });

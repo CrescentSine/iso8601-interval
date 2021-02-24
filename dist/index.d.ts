@@ -3,7 +3,6 @@ import { Period } from './period';
 export interface Interval {
     duration: Duration;
     period: Period;
-    normalization(): Interval;
 }
 /** @param iso8601 PnYnMnWnDTnHnMnS */
 export declare function interval(iso8601?: string): Interval;
