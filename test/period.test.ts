@@ -49,7 +49,7 @@ test('primitive of period is always string', function () {
     expect(+per`P0D`).toBeNaN();
     expect(per(0, 0).toString()).toBe('P0D');
     expect(`${per`P-1Y2M10D`}`).toBe('P-10M10D');
-    expect(per`P12M` as unknown as any + 3).toBe('P1Y3');
+    expect(per`P0.334Y` as unknown as any + 3).toBe('P4M3');
 });
 
 test('create period by static methods', function () {

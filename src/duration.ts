@@ -32,7 +32,7 @@ type TypeHint = "default" | "string" | "number";
 class DurationImpl implements Duration {
     private _ms_num: number;
     constructor(ms: number) {
-        this._ms_num = ms;
+        this._ms_num = Math.round(ms);
     }
 
     get hours() {
@@ -135,12 +135,6 @@ class DurationProcessor extends BaseProcessor {
         }
         return this.startInputNum;
     }
-
-    protected checkBeforeProcessInput(input: TOKEN, isIntegerOrArg: boolean) {
-        if (input !== 'S' && !isIntegerOrArg) {
-            throw new SyntaxError('Only seconds can be non-integer');
-        }
-    };
 
     protected processInput(input: TOKEN, value: number) {
         switch (input) {

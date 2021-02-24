@@ -9,7 +9,7 @@ const MINUTES_PER_HOUR = 60;
 const MS_PER_HOUR = MINUTES_PER_HOUR * MS_PER_MINUTE;
 class DurationImpl {
     constructor(ms) {
-        this._ms_num = ms;
+        this._ms_num = Math.round(ms);
     }
     get hours() {
         return this._ms_num / MS_PER_HOUR;
@@ -96,12 +96,6 @@ class DurationProcessor extends util_1.BaseProcessor {
         }
         return this.startInputNum;
     }
-    checkBeforeProcessInput(input, isIntegerOrArg) {
-        if (input !== 'S' && !isIntegerOrArg) {
-            throw new SyntaxError('Only seconds can be non-integer');
-        }
-    }
-    ;
     processInput(input, value) {
         switch (input) {
             case 'H':

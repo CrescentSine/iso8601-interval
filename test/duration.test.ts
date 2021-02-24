@@ -41,9 +41,9 @@ test('duration must start with P', function () {
     expect(() => dur`T1S`).toThrow();
 });
 
-test('only S can be non-integer on template', function () {
+test('input value can be non-integer', function () {
     expect(dur`PT0.5S`.ms).toBe(500);
-    expect(() => dur`PT0.5H`).toThrow();
+    expect(dur`PT0.1H`.min).toBe(6);
 });
 
 test('non-integer can only have one float point', function () {

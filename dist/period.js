@@ -6,8 +6,14 @@ const util_1 = require("./util");
 class PeriodImpl {
     constructor(days, months) {
         this._allowDay = true;
-        this._days = days;
-        this._months = months;
+        this._days = Math.round(days);
+        if (Math.abs(this._days - days) > Number.EPSILON) {
+            console.warn(`Certain days ${days} have convert to integer value ${this._days}`);
+        }
+        this._months = Math.round(months);
+        if (Math.abs(this._months - months) > Number.EPSILON) {
+            console.warn(`Full months ${months} have convert to integer value ${this._months}`);
+        }
     }
     getCertainDays() {
         return this._days;
@@ -96,10 +102,10 @@ class PeriodProcessor extends util_1.BaseProcessor {
     ignoreAfterT() {
         return this.ignoreAfterT;
     }
-    checkBeforeProcessInput(_input, isIntegerOrArg) {
-        if (!isIntegerOrArg) {
-            throw new SyntaxError('Only seconds can be non-integer');
-        }
+    checkBeforeProcessInput(input, isIntegerOrArg) {
+        if (isIntegerOrArg || input === 'Y' || input === 'W')
+            return;
+        throw new SyntaxError('Only years or weeks can be non-integer');
     }
     ;
     processInput(input, value) {

@@ -20,8 +20,14 @@ class PeriodImpl implements Period {
     private _days: number;
     private _months: number;
     constructor(days: number, months: number) {
-        this._days = days;
-        this._months = months;
+        this._days = Math.round(days);
+        if (Math.abs(this._days - days) > Number.EPSILON) {
+            console.warn(`Certain days ${days} have convert to integer value ${this._days}`);
+        }
+        this._months = Math.round(months);
+        if (Math.abs(this._months - months) > Number.EPSILON) {
+            console.warn(`Full months ${months} have convert to integer value ${this._months}`);
+        }
     }
 
     getCertainDays() {
@@ -129,10 +135,9 @@ class PeriodProcessor extends BaseProcessor {
         return this.ignoreAfterT;
     }
 
-    protected checkBeforeProcessInput(_input: TOKEN, isIntegerOrArg: boolean) {
-        if (!isIntegerOrArg) {
-            throw new SyntaxError('Only seconds can be non-integer');
-        }
+    protected checkBeforeProcessInput(input: TOKEN, isIntegerOrArg: boolean) {
+        if (isIntegerOrArg || input === 'Y' || input === 'W') return;
+        throw new SyntaxError('Only years or weeks can be non-integer');
     };
 
     protected processInput(input: TOKEN, value: number) {
