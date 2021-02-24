@@ -9,9 +9,9 @@ export interface Period {
     toDataJson(): {
         years: number;
         months: number;
-        weeks: number;
         days: number;
     };
+    toString(allowDay?: boolean): string;
 }
 declare class PeriodImpl implements Period {
     private _days;
@@ -26,11 +26,11 @@ declare class PeriodImpl implements Period {
     toDataJson(): {
         years: number;
         months: number;
-        weeks: number;
         days: number;
     };
+    private _allowDay;
     [Symbol.toPrimitive](): string;
-    toString(): string;
+    toString(allowDay?: boolean): string;
 }
 export declare function period(months: number, days: number): Period;
 /** @param iso8601 PnYnMnWnD */

@@ -7,8 +7,9 @@ test("default input of interval is 0ms", function () {
 });
 
 test('convert interval to ISO8601 string', function () {
-    expect(invl`P1MT1H` + "").toBe("P1MT1H");
-    expect(invl`P13M1WT24H61M3.2S` + "").toBe(`P1Y1M1WT25H1M3.2S`);
+    expect(invl`P7D` + "").toBe("P1W");
+    expect(invl`PT1M-1S` + "").toBe("PT59S");
+    expect(invl`P13M1WT24H61M3.2S` + "").toBe(`P1Y1M7DT25H1M3.2S`);
 });
 
 test('4weeks start from 2021-02-28 in EST is not 28 * 24 hours', function () {

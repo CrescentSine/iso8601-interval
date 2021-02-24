@@ -5,6 +5,7 @@ const duration_1 = require("./duration");
 const util_1 = require("./util");
 class PeriodImpl {
     constructor(days, months) {
+        this._allowDay = true;
         this._days = days;
         this._months = months;
     }
@@ -42,28 +43,32 @@ class PeriodImpl {
     toDataJson() {
         let months = this._months % MONTHS_PER_YEAR;
         let years = (this._months - months) / MONTHS_PER_YEAR;
-        let days = this._days % DAYS_PER_WEEK;
-        let weeks = (this._days - days) / DAYS_PER_WEEK;
-        return { years, months, weeks, days };
+        return { years, months, days: this._days };
     }
     [Symbol.toPrimitive]() {
         if (!this._days && !this._months) {
             return "P0D";
         }
-        let { years, months, weeks, days, } = this.toDataJson();
+        if (this._allowDay) {
+            if (!this._months && !(this._days % DAYS_PER_WEEK)) {
+                return `P${this._days / DAYS_PER_WEEK}W`;
+            }
+        }
+        let { years, months, days, } = this.toDataJson();
         let result = "P";
         if (years)
             result += `${years}Y`;
         if (months)
             result += `${months}M`;
-        if (weeks)
-            result += `${weeks}W`;
         if (days)
             result += `${days}D`;
         return result;
     }
-    toString() {
-        return this[Symbol.toPrimitive]();
+    toString(allowDay = true) {
+        this._allowDay = allowDay;
+        let result = this[Symbol.toPrimitive]();
+        this._allowDay = true;
+        return result;
     }
 }
 const MONTHS_PER_YEAR = 12;

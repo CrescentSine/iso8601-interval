@@ -16,7 +16,13 @@ class IntervalImpl implements Interval {
     }
     
     [Symbol.toPrimitive]() {
-        return `${this.period}${String(this.duration).substring(1)}`;
+        if (this.period.getCertainDays() == 0 && this.period.getFullMonths() == 0) {
+            return String(this.duration);
+        }
+        if (this.duration.ms == 0) {
+            return String(this.period);
+        }
+        return this.period.toString(false) + String(this.duration).substring(1);
     }
 }
 
