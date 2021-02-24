@@ -43,3 +43,10 @@ test('primitive of period is always string', function () {
     expect(`${per`P-1Y2M10D`}`).toBe('P-10M1W3D');
     expect(per`P12M` as unknown as any + 3).toBe('P1Y3');
 });
+
+test('create period by static methods', function () {
+    expect(per.ofYears(1)).toEqual(per`P1Y`);
+    expect(per.ofMonths(1)).toEqual(per`P1M`);
+    expect(per.ofWeeks(1)).toEqual(per`P1W`);
+    expect(per.ofDays(1)).toEqual(per`P1D`);
+});
