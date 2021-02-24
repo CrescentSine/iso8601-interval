@@ -5,7 +5,7 @@ const duration_1 = require("./duration");
 const util_1 = require("./util");
 class PeriodImpl {
     constructor(days, months) {
-        this._allowDay = true;
+        this._allowWeek = true;
         this._days = Math.round(days);
         if (Math.abs(this._days - days) > Number.EPSILON) {
             console.warn(`Certain days ${days} have convert to integer value ${this._days}`);
@@ -55,7 +55,7 @@ class PeriodImpl {
         if (!this._days && !this._months) {
             return "P0D";
         }
-        if (this._allowDay) {
+        if (this._allowWeek) {
             if (!this._months && !(this._days % DAYS_PER_WEEK)) {
                 return `P${this._days / DAYS_PER_WEEK}W`;
             }
@@ -70,10 +70,10 @@ class PeriodImpl {
             result += `${days}D`;
         return result;
     }
-    toString(allowDay = true) {
-        this._allowDay = allowDay;
+    toString(allowWeek = true) {
+        this._allowWeek = allowWeek;
         let result = this[Symbol.toPrimitive]();
-        this._allowDay = true;
+        this._allowWeek = true;
         return result;
     }
 }

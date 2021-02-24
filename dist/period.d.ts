@@ -11,7 +11,8 @@ export interface Period {
         months: number;
         days: number;
     };
-    toString(allowDay?: boolean): string;
+    /** @param allowWeek can convert to format `PnW`, default is `true`. */
+    toString(allowWeek?: boolean): string;
 }
 declare class PeriodImpl implements Period {
     private _days;
@@ -28,9 +29,9 @@ declare class PeriodImpl implements Period {
         months: number;
         days: number;
     };
-    private _allowDay;
+    private _allowWeek;
     [Symbol.toPrimitive](): string;
-    toString(allowDay?: boolean): string;
+    toString(allowWeek?: boolean): string;
 }
 export declare function period(months: number, days: number): Period;
 /** @param iso8601 PnYnMnWnD */

@@ -13,7 +13,8 @@ export interface Period {
         months: number;
         days: number;
     };
-    toString(allowDay?: boolean): string;
+    /** @param allowWeek can convert to format `PnW`, default is `true`. */
+    toString(allowWeek?: boolean): string;
 }
 
 class PeriodImpl implements Period {
@@ -76,14 +77,14 @@ class PeriodImpl implements Period {
         return { years, months, days: this._days };
     }
 
-    private _allowDay = true;
+    private _allowWeek = true;
 
     [Symbol.toPrimitive]() {
         if (!this._days && !this._months) {
             return "P0D";
         }
 
-        if (this._allowDay) {
+        if (this._allowWeek) {
             if (!this._months && !(this._days % DAYS_PER_WEEK)) {
                 return `P${this._days / DAYS_PER_WEEK}W`;
             }
@@ -100,10 +101,10 @@ class PeriodImpl implements Period {
         return result;
     }
 
-    toString(allowDay = true) {
-        this._allowDay = allowDay;
+    toString(allowWeek = true) {
+        this._allowWeek = allowWeek;
         let result = this[Symbol.toPrimitive]();
-        this._allowDay = true;
+        this._allowWeek = true;
         return result;
     }
 }
