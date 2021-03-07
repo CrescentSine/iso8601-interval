@@ -64,3 +64,11 @@ test('4weeks start from 02-28 in EST is not 28 * 24 hours', function () {
     expect(per`P4W`.toDuration(new Date(2020, 1, 28)).h).not.toBe(28 * 24);
     unregister();
 });
+
+test('force convert 2.5Weeks -> 18Days', function () {
+    expect(per`P2.5W`.getCertainDays()).toBe(18);
+});
+
+test('12Months -> 1Year', function () {
+    expect(per`P12M`.toString()).toBe("P1Y");
+});

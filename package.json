@@ -16,14 +16,14 @@
   "license": "MIT",
   "scripts": {
     "tsc-watch": "tsc -w",
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "jest"
   },
   "dependencies": {
     "tslib": "^2.1.0"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
+    "coveralls": "^3.1.0",
     "jest": "^26.6.3",
     "timezone-mock": "^1.1.2",
     "ts-jest": "^26.5.1",
