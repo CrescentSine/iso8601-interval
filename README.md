@@ -23,7 +23,7 @@ Check out the details on [Wikipedia](https://en.wikipedia.org/wiki/ISO_8601#Dura
 ## Install
 
 ```bash
-npm install time-interval
+npm install iso8601-interval
 ```
 
 then `import` to your js module
