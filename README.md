@@ -1,5 +1,13 @@
 # iso8601-interval
 
+[![Build Status](https://travis-ci.com/CrescentSine/iso8601-interval.svg?branch=main)](https://travis-ci.com/CrescentSine/iso8601-interval)
+![npm](https://img.shields.io/npm/v/iso8601-interval)
+![GitHub](https://img.shields.io/github/license/CrescentSine/iso8601-interval)
+![npm bundle size](https://img.shields.io/bundlephobia/min/iso8601-interval)
+![GitHub top language](https://img.shields.io/github/languages/top/CrescentSine/iso8601-interval)
+[![Coverage Status](https://coveralls.io/repos/github/CrescentSine/iso8601-interval/badge.svg?branch=main)](https://coveralls.io/github/CrescentSine/iso8601-interval?branch=main)
+![GitHub issues](https://img.shields.io/github/issues/CrescentSine/iso8601-interval)
+
 A time duration convert library based on tagged template syntax.
 
 ## The ISO8601 duration format
