@@ -1,17 +1,17 @@
 {
-  "name": "time-interval",
+  "name": "iso8601-interval",
   "version": "1.0.0",
   "description": "A time duration convert library based on tagged template syntax",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SineTitans/time-interval.git"
+    "url": "git+https://github.com/CrescentSine/iso8601-interval.git"
   },
   "author": {
-    "name": "Sine Titan",
+    "name": "Crescent Moon",
     "email": "565022817@qq.com",
-    "url": "https://github.com/SineTitans"
+    "url": "https://github.com/CrescentSine"
   },
   "license": "MIT",
   "scripts": {
