@@ -1,4 +1,4 @@
-# time-interval
+# iso8601-interval
 
 A time duration convert library based on tagged template syntax.
 
