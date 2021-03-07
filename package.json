@@ -15,8 +15,10 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
     "tsc-watch": "tsc -w",
-    "test": "jest"
+    "test": "jest",
+    "coverall": "cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "tslib": "^2.1.0"
