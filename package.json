@@ -18,7 +18,7 @@
     "build": "tsc",
     "tsc-watch": "tsc -w",
     "test": "jest",
-    "coverall": "cat coverage/lcov.info | coveralls"
+    "coverage": "jest --coverage"
   },
   "dependencies": {
     "tslib": "^2.1.0"
