@@ -1,6 +1,6 @@
 # iso8601-interval
 
-[![Build Status](https://travis-ci.com/CrescentSine/iso8601-interval.svg?branch=main)](https://travis-ci.com/CrescentSine/iso8601-interval)
+[![Node.js CI](https://github.com/CrescentSine/iso8601-interval/actions/workflows/node.js.yml/badge.svg)](https://github.com/CrescentSine/iso8601-interval/actions/workflows/node.js.yml)
 [![npm](https://img.shields.io/npm/v/iso8601-interval)](https://www.npmjs.com/package/iso8601-interval)
 [![GitHub](https://img.shields.io/github/license/CrescentSine/iso8601-interval)](https://github.com/CrescentSine/iso8601-interval/blob/main/LICENSE)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/iso8601-interval)](https://www.npmjs.com/package/iso8601-interval)
