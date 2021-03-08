@@ -32,7 +32,17 @@ jobs:
     - run: yarn
     - run: yarn build
     - run: yarn coverage
+    - name: Add & Commit
+      if: ${{ matrix.node-version == 15.x }}
+      uses: EndBug/add-and-commit@v7.1.0
+      with:
+        add: 'dist'
+        author_name: 'Crescent Moon'
+        author_email: 565022817@qq.com
+        message: "AUTO COMMIT GENERATED CODES"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Coveralls
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@v1.1.2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
