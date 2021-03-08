@@ -33,7 +33,7 @@ jobs:
     - run: yarn build
     - run: yarn coverage
     - name: Add & Commit
-      if: ${{ matrix.node-version == 15.x }}
+      if: ${{ startsWith(matrix.node-version, '15') }}
       uses: EndBug/add-and-commit@v7.1.0
       with:
         add: 'dist'
