@@ -1,6 +1,6 @@
 {
   "name": "iso8601-interval",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A time duration convert library based on tagged template syntax",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
