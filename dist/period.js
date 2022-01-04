@@ -29,7 +29,7 @@ class PeriodImpl {
     }
     toDuration(startWith) {
         if (!this._days && !this._months) {
-            return duration_1.duration(0);
+            return (0, duration_1.duration)(0);
         }
         if (!startWith)
             startWith = new Date;
@@ -38,7 +38,7 @@ class PeriodImpl {
             changeDate.setDate(changeDate.getDate() + this._days);
         if (this._months)
             changeDate.setMonth(changeDate.getMonth() + this._months);
-        return duration_1.duration(changeDate.getTime() - startWith.getTime());
+        return (0, duration_1.duration)(changeDate.getTime() - startWith.getTime());
     }
     toDate(start) {
         let result = new Date(start.getTime());
@@ -130,9 +130,9 @@ function period(input, ...args) {
     if (typeof input === 'number') {
         return new PeriodImpl(args[0], input);
     }
-    let iso8601 = typeof input === "string" ? util_1.strToTSA(input) : input;
+    let iso8601 = typeof input === "string" ? (0, util_1.strToTSA)(input) : input;
     let processor = new PeriodProcessor;
-    util_1.TemplateInputProcess(processor, iso8601, args);
+    (0, util_1.TemplateInputProcess)(processor, iso8601, args);
     return processor.createResultPeriod();
 }
 exports.period = period;

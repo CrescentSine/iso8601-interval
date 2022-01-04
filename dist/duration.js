@@ -115,9 +115,9 @@ function duration(input, ...args) {
     if (typeof input == 'number') {
         return new DurationImpl(input);
     }
-    let iso8601 = typeof input === "string" ? util_1.strToTSA(input) : input;
+    let iso8601 = typeof input === "string" ? (0, util_1.strToTSA)(input) : input;
     let processor = new DurationProcessor;
-    util_1.TemplateInputProcess(processor, iso8601, args);
+    (0, util_1.TemplateInputProcess)(processor, iso8601, args);
     return new DurationImpl(processor.getResultMS());
 }
 exports.duration = duration;

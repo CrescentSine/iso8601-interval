@@ -21,11 +21,11 @@ class IntervalImpl {
     }
 }
 function interval(input = "PT0S", ...args) {
-    let iso8601 = typeof input === "string" ? util_1.strToTSA(input) : input;
-    return new IntervalImpl(duration_1.duration(iso8601, ...args), period_1.period(iso8601, ...args));
+    let iso8601 = typeof input === "string" ? (0, util_1.strToTSA)(input) : input;
+    return new IntervalImpl((0, duration_1.duration)(iso8601, ...args), (0, period_1.period)(iso8601, ...args));
 }
 exports.interval = interval;
 exports.invl = interval;
-tslib_1.__exportStar(require("./duration"), exports);
-tslib_1.__exportStar(require("./period"), exports);
+(0, tslib_1.__exportStar)(require("./duration"), exports);
+(0, tslib_1.__exportStar)(require("./period"), exports);
 //# sourceMappingURL=index.js.map
